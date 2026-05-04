@@ -172,7 +172,16 @@ export const checkLinkController = async (req, res) => {
         if (lastSnapshot) {
     evidence = diffResult
         .filter(d => d.added || d.removed)
-        .map(d => (d.added ? "+ " : "- ") + d.value.trim())
+        .map(d => {
+            const clean = d.value
+                .replace(/\s+/g, " ")
+                .trim()
+                .split("\n")[0]
+                .slice(0, 100);
+
+            return (d.added ? "+ " : "- ") + clean;
+        })
+        .filter(line => line.length > 10) // remove useless tiny lines
         .slice(0, 5);
 }
 
