@@ -16,7 +16,7 @@ Highlight only important changes.
 Include brief evidence.
 
 Diff:
-${diffText}
+${diffText.slice(0, 3000)}
 `;
 
         const result = await model.generateContent(prompt);
@@ -26,6 +26,6 @@ ${diffText}
 
     } catch (error) {
         console.error("Gemini Error:", error.message);
-        return "No summary generated (LLM unavailable)";
+        return `LLM error: ${error.message}`;
     }
 };
